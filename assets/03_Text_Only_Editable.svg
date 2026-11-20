@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="683" viewBox="0 0 2048 683">
+<title>Luton Blinds | 03 Text Only</title>
+<desc>Editable vector logo source. Colors: charcoal, rosewood and olive. All text remains selectable.</desc>
+<defs><linearGradient id="slats" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A55B79"/><stop offset="1" stop-color="#EBDCE3"/></linearGradient></defs>
+<g id="brand-name" font-family="Inter Display, Inter, Arial, sans-serif" font-size="195" font-weight="800" letter-spacing="-2">
+ <text x="340" y="385" fill="#202020">LUTON</text>
+ <text x="1046" y="385" fill="#960026">BLINDS</text>
+</g>
+<g id="tagline" font-family="Inter Display, Inter, Arial, sans-serif" font-size="65" font-weight="400" letter-spacing="18.5" fill="#575757">
+ <text x="518" y="468">SHUTTERS &amp; CURTAINS</text>
+</g>
+<path d="M350 449 H476" stroke="#960026" stroke-width="8"/>
+<path d="M1642 449 H1768" stroke="#960026" stroke-width="8"/>
+
+</svg>
