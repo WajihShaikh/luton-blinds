@@ -3,16 +3,20 @@
  'use strict';
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const root=document.documentElement;
- // Add a skip link and a stable main landmark without changing page routes.
  const main=document.querySelector('main');
  if(main&&!main.id)main.id='main-content';
+
+ // Only reveal the skip link when it receives keyboard focus.
  if(main&&!document.querySelector('.skip-link')){
-  const link=document.createElement('a'); link.className='skip-link';link.href='#main-content';link.textContent='Skip to main content';
+  const link=document.createElement('a');
+  link.className='skip-link';
+  link.href='#main-content';
+  link.textContent='Skip to main content';
   document.body.insertBefore(link,document.body.firstChild);
  }
- // One motion observer rather than triggering nested, competing reveal systems.
+
  if(!reduce && 'IntersectionObserver' in window){
-  const selectors=['.section-head','.editorial-image','.editorial-copy','.compare-card','.gallery-wide','.asym-gallery','.split-photo','.split-panel .copy','.process-item','.review-photo','.review-copy','.dark-feature .feature-copy','.dark-feature>img','.closing','.inline-booking','.collection-tile','.spec-list','.faq-layout','.contact-grid','.booking-shell'];
+  const selectors=['.section-head','.editorial-image','.editorial-copy','.compare-card','.gallery-wide','.asym-gallery','.split-photo','.split-panel .copy','.process-item','.review-photo','.review-copy','.dark-feature','.closing','.faq-layout','.product-rail','.collection-tile'];
   const targets=[...document.querySelectorAll('main '+selectors.join(',main '))].filter(el=>!el.closest('[data-v5-reveal]'));
   targets.forEach((el,i)=>{
    el.dataset.v5Reveal=el.matches('.editorial-image,.split-photo,.review-photo,.dark-feature>img,.collection-tile')?'photo':'content';
@@ -25,7 +29,6 @@
   targets.forEach(el=>{if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('v5-inview');else io.observe(el)});
   root.classList.add('v5-motion');
  }
- // Use accurate semantic states for tabs. The existing booking JS owns panel swaps.
  document.querySelectorAll('.method-tabs button').forEach(btn=>{
   btn.setAttribute('aria-pressed',String(btn.classList.contains('active')));
   btn.addEventListener('click',()=>{
@@ -36,8 +39,6 @@
   btn.setAttribute('aria-pressed',String(btn.classList.contains('active')));
   btn.addEventListener('click',()=>document.querySelectorAll('.filter-btn[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn))));
  });
- // User can close a mobile menu by tapping outside or pressing Escape (existing handler),
- // and the page is no longer hidden behind an oversized fixed overlay after navigation.
  const mobile=document.getElementById('mobile-nav');
  const toggle=document.querySelector('.menu-toggle');
  if(toggle&&mobile){
@@ -49,13 +50,10 @@
   };
   document.addEventListener('pointerdown',outside);
  }
- // Don't expose internal review-integration messages as testimonials.
  document.querySelectorAll('.review-note').forEach(el=>{
   if(/will be connected|approved source is confirmed/i.test(el.textContent||''))el.remove();
  });
- // Mark key first-fold photographs for eager decoding; leave below-the-fold media lazy.
  document.querySelectorAll('main .photo-banner-image').forEach(img=>{img.loading='eager';img.setAttribute('fetchpriority','high')});
- // Keep hash navigation aligned with both sticky header and product chapter bar.
  document.querySelectorAll('a[href^="#chapter-"]').forEach(a=>{
   a.addEventListener('click',e=>{
    const target=document.getElementById(a.hash.slice(1));if(!target)return;
