@@ -6,14 +6,8 @@
  const main=document.querySelector('main');
  if(main&&!main.id)main.id='main-content';
 
- // Only reveal the skip link when it receives keyboard focus.
- if(main&&!document.querySelector('.skip-link')){
-  const link=document.createElement('a');
-  link.className='skip-link';
-  link.href='#main-content';
-  link.textContent='Skip to main content';
-  document.body.insertBefore(link,document.body.firstChild);
- }
+ // Remove any previously generated visible skip link.
+ document.querySelectorAll('.skip-link').forEach(link=>link.remove());
 
  if(!reduce && 'IntersectionObserver' in window){
   const selectors=['.section-head','.editorial-image','.editorial-copy','.compare-card','.gallery-wide','.asym-gallery','.split-photo','.split-panel .copy','.process-item','.review-photo','.review-copy','.dark-feature','.closing','.faq-layout','.product-rail','.collection-tile'];
@@ -54,12 +48,4 @@
   if(/will be connected|approved source is confirmed/i.test(el.textContent||''))el.remove();
  });
  document.querySelectorAll('main .photo-banner-image').forEach(img=>{img.loading='eager';img.setAttribute('fetchpriority','high')});
- document.querySelectorAll('a[href^="#chapter-"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-   const target=document.getElementById(a.hash.slice(1));if(!target)return;
-   e.preventDefault();
-   target.scrollIntoView({block:'start',behavior:reduce?'instant':'smooth'});
-   history.replaceState(null,'',a.hash);
-  });
- });
 })();
